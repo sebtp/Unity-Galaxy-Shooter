@@ -7,6 +7,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _speed = 10f;
     [SerializeField]
+    private float _speedPowerupMultiplier = 1.5f;
+    [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
     private float _fireRate = 0.15f;
@@ -17,7 +19,7 @@ public class Player : MonoBehaviour
     private SpawnManager _spawnManager;
 
     private bool _isTripleShotActive = false;
-    private bool _isTripleShotPowerDownRoutineEnded = true;
+
     [SerializeField]
     private GameObject _tripleShotPrefab;
 
@@ -37,7 +39,6 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GoFast();
         CalculateMovement();
         if (Input.GetKeyDown(KeyCode.Space) && Time.time >= _canFire)
         {
@@ -73,18 +74,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    void GoFast()
-    {
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            _speed = 20f;
-        } else if (Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            _speed = 10f;
-        }
-        
-    }
-
     void FireLaser()
     {        
         _canFire = Time.time + _fireRate;
@@ -114,18 +103,25 @@ public class Player : MonoBehaviour
     public void TripleShotActive()
     {
         _isTripleShotActive = true;
-        _isTripleShotPowerDownRoutineEnded = false;
         StartCoroutine(TripleShotPowerDownRoutine()); 
+    }
+
+    public void SpeedActive()
+    {
+        _speed = _speed * _speedPowerupMultiplier;
+        StartCoroutine(SpeedPowerDownRoutine());
     }
 
     IEnumerator TripleShotPowerDownRoutine()
     {
-        while (_isTripleShotPowerDownRoutineEnded == false)
-        {   
-            yield return new WaitForSeconds(5);
-            _isTripleShotActive = false;
-            _isTripleShotPowerDownRoutineEnded = true;
-        }
+        yield return new WaitForSeconds(5);
+        _isTripleShotActive = false;
+    }
+
+    IEnumerator SpeedPowerDownRoutine()
+    {
+        yield return new WaitForSeconds(5);
+        _speed = _speed / _speedPowerupMultiplier;
     }
 
 }
