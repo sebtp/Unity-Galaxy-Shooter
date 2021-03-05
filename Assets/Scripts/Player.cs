@@ -108,7 +108,7 @@ public class Player : MonoBehaviour
 
     public void SpeedActive()
     {
-        _speed = _speed * _speedPowerupMultiplier;
+        _speed *= _speedPowerupMultiplier;
         StartCoroutine(SpeedPowerDownRoutine());
     }
 
@@ -121,7 +121,7 @@ public class Player : MonoBehaviour
     IEnumerator SpeedPowerDownRoutine()
     {
         yield return new WaitForSeconds(5);
-        _speed = _speed / _speedPowerupMultiplier;
+        _speed /= _speedPowerupMultiplier;
     }
 
 }
