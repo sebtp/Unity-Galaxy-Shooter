@@ -40,7 +40,7 @@ public class SpawnManager : MonoBehaviour
     {
         while (_stopSpawning == false)
         {
-            GameObject newPowerup = Instantiate(_powerups[Random.Range(0, 2)], new Vector3(Random.Range(_boundLeft, _boundRight), _boundTop, 0), Quaternion.identity);
+            GameObject newPowerup = Instantiate(_powerups[Random.Range(0, 3)], new Vector3(Random.Range(_boundLeft, _boundRight), _boundTop, 0), Quaternion.identity);
             newPowerup.transform.parent = this.transform;
             yield return new WaitForSeconds(Random.Range(5f, 8f));
         }

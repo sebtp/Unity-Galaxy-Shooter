@@ -19,19 +19,29 @@ public class Player : MonoBehaviour
     private SpawnManager _spawnManager;
 
     private bool _isTripleShotActive = false;
+    private bool _isSpeedActive = false;
+    private bool _isShieldActive = false;
 
     [SerializeField]
     private GameObject _tripleShotPrefab;
+
+    private GameObject _shield;
 
     // Start is called before the first frame update
     void Start()
     {
         transform.position = new Vector3(0, 0, 0);
+        
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
-
-        if (_spawnManager == false)
+        if (!_spawnManager)
         {
             Debug.LogError("The Spawn Manager is NULL");
+        }
+
+        _shield = this.gameObject.transform.GetChild(0).gameObject;
+        if (!_shield)
+        {
+            Debug.LogError("The Shield is NULL");
         }
 
     }
@@ -91,10 +101,19 @@ public class Player : MonoBehaviour
 
     public void Damage()
     {
-        _lives--;
+        if (_isShieldActive)
+        {
+            _isShieldActive = false;
+            _shield.SetActive(false);
+            return;
+        } 
+        else
+        {
+            _lives--;
+        }
+
         if (_lives < 1)
         {
-            //tell spawn manager to stop cuz we ded
             _spawnManager.OnPlayerDeath();
             Destroy(this.gameObject);
         }
@@ -108,8 +127,15 @@ public class Player : MonoBehaviour
 
     public void SpeedActive()
     {
+        _isSpeedActive = true;
         _speed *= _speedPowerupMultiplier;
         StartCoroutine(SpeedPowerDownRoutine());
+    }
+
+    public void ShieldActive()
+    {
+        _isShieldActive = true;
+        _shield.SetActive(true);
     }
 
     IEnumerator TripleShotPowerDownRoutine()
@@ -122,6 +148,6 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(5);
         _speed /= _speedPowerupMultiplier;
+        _isSpeedActive = false;
     }
-
 }
