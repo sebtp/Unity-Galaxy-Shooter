@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     private int _lives = 3;
 
     private SpawnManager _spawnManager;
+    private UIManager _uiManager;
 
     private bool _isTripleShotActive = false;
     private bool _isSpeedActive = false;
@@ -26,6 +27,9 @@ public class Player : MonoBehaviour
     private GameObject _tripleShotPrefab;
 
     private GameObject _shield;
+
+    [SerializeField]
+    public int _score;
 
     // Start is called before the first frame update
     void Start()
@@ -42,6 +46,12 @@ public class Player : MonoBehaviour
         if (!_shield)
         {
             Debug.LogError("The Shield is NULL");
+        }
+
+        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        if (!_uiManager)
+        {
+            Debug.LogError("UIManager is NULL");
         }
 
     }
@@ -149,5 +159,11 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(5);
         _speed /= _speedPowerupMultiplier;
         _isSpeedActive = false;
+    }
+
+    public void AddScore()
+    {
+        _score++;
+        _uiManager.UpdateScoreText(_score);
     }
 }

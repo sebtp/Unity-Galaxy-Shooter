@@ -5,6 +5,16 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     private float _speed = 4f;
+    private Player _player;
+
+    void Start()
+    {
+        _player = GameObject.FindGameObjectWithTag("Player").gameObject.GetComponent<Player>();
+        if (!_player)
+        {
+            Debug.LogError("Player is NULL");
+        }
+    }
 
     // Update is called once per frame
     void Update()
@@ -20,18 +30,21 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Player")
+        if (other.CompareTag("Player"))
         {
-            Player player = other.transform.GetComponent<Player>();
-            if (player)
+            if (_player)
             {
-                player.Damage();
+                _player.Damage();
             }
             Destroy(this.gameObject);    
         }
    
-        if (other.tag == "Laser")
+        if (other.CompareTag("Laser"))
         {
+            if (_player)
+            {
+                _player.AddScore(); 
+            }
             Destroy(other.gameObject);
             Destroy(this.gameObject);
 
