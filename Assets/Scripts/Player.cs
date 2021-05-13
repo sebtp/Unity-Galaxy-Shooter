@@ -54,6 +54,8 @@ public class Player : MonoBehaviour
             Debug.LogError("UIManager is NULL");
         }
 
+        
+
     }
 
     // Update is called once per frame
@@ -126,7 +128,7 @@ public class Player : MonoBehaviour
         if (_lives < 1)
         {
             _spawnManager.OnPlayerDeath();
-            _uiManager.GameOver();
+            _uiManager.GameOverSequence();
             Destroy(this.gameObject);
         }
     }

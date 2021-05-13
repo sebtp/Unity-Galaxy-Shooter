@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -17,8 +16,16 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Sprite[] _liveSprites;
 
+    private GameManager _gameManager;
+
     private void Start()
     {
+        _gameManager = GameObject.Find("Game_Manager").GetComponent<GameManager>();
+        if (!_gameManager)
+        {
+            Debug.LogError("The Game Manager is NULL");
+        }
+
         _scoreText.text = "Score: 0";
         _gameOverText.gameObject.SetActive(false);
         _restartText.gameObject.SetActive(false);
@@ -26,10 +33,7 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            RestartGame();
-        }
+        
     }
 
     public void UpdateScoreText(int score)
@@ -42,8 +46,9 @@ public class UIManager : MonoBehaviour
         _livesImg.sprite = _liveSprites[currentLives];
     }
 
-    public void GameOver()
+    public void GameOverSequence()
     {
+        _gameManager.GameOver();
         _gameOverText.gameObject.SetActive(true);
         _restartText.gameObject.SetActive(true);
         StartCoroutine(GameOverTextBlink());
@@ -58,14 +63,6 @@ public class UIManager : MonoBehaviour
             yield return new WaitForSeconds(0.2f);
             _gameOverText.gameObject.SetActive(true);
         }
-    }
-
-    public void RestartGame()
-    {
-        _gameOverText.gameObject.SetActive(false);
-        _restartText.gameObject.SetActive(false);
-        Scene scene = SceneManager.GetActiveScene(); 
-        SceneManager.LoadScene(scene.name);
     }
 
 }
