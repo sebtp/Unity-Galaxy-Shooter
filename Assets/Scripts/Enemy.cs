@@ -8,6 +8,11 @@ public class Enemy : MonoBehaviour
     private Player _player;
     private Animator _anim;
 
+    private float _boundTop = 7.2f;
+    //private float _boundBottom = -5f;
+    private float _boundRight = 9f;
+    private float _boundLeft = -9f;
+
     void Start()
     {
         _player = GameObject.FindGameObjectWithTag("Player").gameObject.GetComponent<Player>();
@@ -29,7 +34,7 @@ public class Enemy : MonoBehaviour
 
         if (transform.position.y < -5f)
         {
-            Destroy(gameObject);
+            transform.position = new Vector3(Random.Range(_boundLeft, _boundRight), _boundTop, 0);
         }
 
     }
