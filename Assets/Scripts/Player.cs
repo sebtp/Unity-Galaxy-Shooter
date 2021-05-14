@@ -42,7 +42,7 @@ public class Player : MonoBehaviour
             Debug.LogError("The Spawn Manager is NULL");
         }
 
-        _shield = this.gameObject.transform.GetChild(0).gameObject;
+        _shield = gameObject.transform.GetChild(0).gameObject;
         if (!_shield)
         {
             Debug.LogError("The Shield is NULL");
@@ -129,7 +129,7 @@ public class Player : MonoBehaviour
         {
             _spawnManager.OnPlayerDeath();
             _uiManager.GameOverSequence();
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
     }
 

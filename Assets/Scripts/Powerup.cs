@@ -21,7 +21,7 @@ public class Powerup : MonoBehaviour
 
         if (transform.position.y < -6.9f)
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
     }
 
@@ -50,7 +50,7 @@ public class Powerup : MonoBehaviour
                 }
             }
             
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
     }
 }

@@ -6,6 +6,7 @@ public class Enemy : MonoBehaviour
 {
     private float _speed = 4f;
     private Player _player;
+    private Animator _anim;
 
     void Start()
     {
@@ -13,6 +14,11 @@ public class Enemy : MonoBehaviour
         if (!_player)
         {
             Debug.LogError("Player is NULL");
+        }
+        _anim = GetComponent<Animator>();
+        if (!_anim)
+        {
+            Debug.LogError("Animator is NULL");
         }
     }
 
@@ -23,7 +29,7 @@ public class Enemy : MonoBehaviour
 
         if (transform.position.y < -5f)
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
 
     }
@@ -36,7 +42,9 @@ public class Enemy : MonoBehaviour
             {
                 _player.Damage();
             }
-            Destroy(this.gameObject);    
+            _anim.SetTrigger("OnEnemyDeath");
+            Destroy(GetComponent<BoxCollider2D>());
+            Destroy(gameObject, 2.35f);
         }
    
         if (other.CompareTag("Laser"))
@@ -46,8 +54,9 @@ public class Enemy : MonoBehaviour
                 _player.AddScore(); 
             }
             Destroy(other.gameObject);
-            Destroy(this.gameObject);
-
+            _anim.SetTrigger("OnEnemyDeath");
+            Destroy(GetComponent<BoxCollider2D>());
+            Destroy(gameObject, 2.35f);
         }
     }
 }
