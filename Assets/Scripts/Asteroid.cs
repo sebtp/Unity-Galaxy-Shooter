@@ -25,7 +25,8 @@ public class Asteroid : MonoBehaviour
         {
             Instantiate(_explosion, transform.position, Quaternion.identity);
             Destroy(GetComponent<CircleCollider2D>());
-            Destroy(gameObject, 1.0f);
+            Destroy(other.gameObject);
+            Destroy(gameObject, 0.3f);
         }
     }
 }
