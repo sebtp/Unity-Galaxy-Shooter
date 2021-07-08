@@ -27,6 +27,8 @@ public class Player : MonoBehaviour
     private GameObject _tripleShotPrefab;
 
     private GameObject _shield;
+    
+    private GameObject _leftEngine, _rightEngine;
 
     [SerializeField]
     public int _score;
@@ -46,6 +48,18 @@ public class Player : MonoBehaviour
         if (!_shield)
         {
             Debug.LogError("The Shield is NULL");
+        }
+
+        _rightEngine = gameObject.transform.GetChild(2).gameObject;
+        if (!_rightEngine)
+        {
+            Debug.LogError("The Right Engine is NULL");
+        }
+
+        _leftEngine = gameObject.transform.GetChild(3).gameObject;
+        if (!_leftEngine)
+        {
+            Debug.LogError("The Left Engine is NULL");
         }
 
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
@@ -119,13 +133,19 @@ public class Player : MonoBehaviour
             _shield.SetActive(false);
             return;
         } 
-        else
-        {
-            _lives--;
-            _uiManager.UpdateLives(_lives);
-        }
 
-        if (_lives < 1)
+        _lives--;
+        _uiManager.UpdateLives(_lives);
+            
+        if (_lives == 2)
+        {
+            _rightEngine.SetActive(true);
+        }
+        else if (_lives == 1)
+        {
+            _leftEngine.SetActive(true);
+        } 
+        else if (_lives < 1)
         {
             _spawnManager.OnPlayerDeath();
             _uiManager.GameOverSequence();
