@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
 
     private SpawnManager _spawnManager;
     private UIManager _uiManager;
+    private AudioManager _audioManager;
 
     private bool _isTripleShotActive = false;
     private bool _isSpeedActive = false;
@@ -31,7 +32,7 @@ public class Player : MonoBehaviour
     private GameObject _leftEngine, _rightEngine;
 
     [SerializeField]
-    public int _score;
+    public int _score;    
 
     // Start is called before the first frame update
     void Start()
@@ -68,8 +69,11 @@ public class Player : MonoBehaviour
             Debug.LogError("UIManager is NULL");
         }
 
-        
-
+        _audioManager = GameObject.Find("Audio_Manager").GetComponent<AudioManager>();
+        if (!_audioManager)
+        {
+            Debug.LogError("Audio Source on the Player is NULL");
+        }
     }
 
     // Update is called once per frame
@@ -123,6 +127,7 @@ public class Player : MonoBehaviour
             Instantiate(_tripleShotPrefab, transform.position + new Vector3(-0.13f, 0.17f, 0), Quaternion.identity);
         }
 
+        _audioManager.PlayLaserSound();
     }
 
     public void Damage()
@@ -148,6 +153,7 @@ public class Player : MonoBehaviour
         else if (_lives < 1)
         {
             _spawnManager.OnPlayerDeath();
+            _audioManager.PlayExplosionSound();
             _uiManager.GameOverSequence();
             Destroy(gameObject);
         }
