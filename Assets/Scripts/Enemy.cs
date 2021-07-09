@@ -13,6 +13,9 @@ public class Enemy : MonoBehaviour
     private float _boundRight = 9f;
     private float _boundLeft = -9f;
 
+    [SerializeField]
+    private AudioClip _clip;
+
     void Start()
     {
         _player = GameObject.FindGameObjectWithTag("Player").gameObject.GetComponent<Player>();
@@ -49,6 +52,7 @@ public class Enemy : MonoBehaviour
             }
             _anim.SetTrigger("OnEnemyDeath");
             Destroy(GetComponent<BoxCollider2D>());
+            AudioSource.PlayClipAtPoint(_clip, transform.position);
             Destroy(gameObject, 2.35f);
         }
    
@@ -61,6 +65,7 @@ public class Enemy : MonoBehaviour
             Destroy(other.gameObject);
             _anim.SetTrigger("OnEnemyDeath");
             Destroy(GetComponent<BoxCollider2D>());
+            AudioSource.PlayClipAtPoint(_clip, transform.position);
             Destroy(gameObject, 2.35f);
         }
     }

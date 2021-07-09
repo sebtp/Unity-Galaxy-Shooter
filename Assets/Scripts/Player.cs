@@ -11,6 +11,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
+    private GameObject _tripleShotPrefab;
+
+    [SerializeField]
     private float _fireRate = 0.15f;
     private float _canFire = 0f;
     [SerializeField]
@@ -18,18 +21,21 @@ public class Player : MonoBehaviour
 
     private SpawnManager _spawnManager;
     private UIManager _uiManager;
-    private AudioManager _audioManager;
 
     private bool _isTripleShotActive = false;
     private bool _isSpeedActive = false;
     private bool _isShieldActive = false;
 
-    [SerializeField]
-    private GameObject _tripleShotPrefab;
+    
 
     private GameObject _shield;
     
     private GameObject _leftEngine, _rightEngine;
+
+    [SerializeField]
+    private AudioClip _clipExplosion;
+    [SerializeField]
+    private AudioClip _clipLaser;
 
     [SerializeField]
     public int _score;    
@@ -67,12 +73,6 @@ public class Player : MonoBehaviour
         if (!_uiManager)
         {
             Debug.LogError("UIManager is NULL");
-        }
-
-        _audioManager = GameObject.Find("Audio_Manager").GetComponent<AudioManager>();
-        if (!_audioManager)
-        {
-            Debug.LogError("Audio Source on the Player is NULL");
         }
     }
 
@@ -117,6 +117,8 @@ public class Player : MonoBehaviour
     void FireLaser()
     {        
         _canFire = Time.time + _fireRate;
+
+        AudioSource.PlayClipAtPoint(_clipLaser, transform.position);
         
         if (_isTripleShotActive == false)
         {
@@ -126,8 +128,6 @@ public class Player : MonoBehaviour
         {
             Instantiate(_tripleShotPrefab, transform.position + new Vector3(-0.13f, 0.17f, 0), Quaternion.identity);
         }
-
-        _audioManager.PlayLaserSound();
     }
 
     public void Damage()
@@ -153,7 +153,7 @@ public class Player : MonoBehaviour
         else if (_lives < 1)
         {
             _spawnManager.OnPlayerDeath();
-            _audioManager.PlayExplosionSound();
+            AudioSource.PlayClipAtPoint(_clipExplosion, transform.position);
             _uiManager.GameOverSequence();
             Destroy(gameObject);
         }

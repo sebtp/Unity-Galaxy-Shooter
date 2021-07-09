@@ -12,7 +12,8 @@ public class Powerup : MonoBehaviour
     // 2 = Shield
     [SerializeField]
     private int _powerupID;
-
+    [SerializeField]
+    private AudioClip _clip;
 
     // Update is called once per frame
     void Update()
@@ -49,7 +50,8 @@ public class Powerup : MonoBehaviour
                         break;
                 }
             }
-            
+
+            AudioSource.PlayClipAtPoint(_clip, transform.position);
             Destroy(gameObject);
         }
     }
