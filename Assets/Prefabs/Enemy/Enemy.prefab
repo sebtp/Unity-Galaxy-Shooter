@@ -48,6 +48,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _clip: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
+  _laserPrefab: {fileID: 2358475962355523011, guid: 21fb7c7d65c8c134e90f8bb7c0c3499b,
+    type: 3}
 --- !u!212 &5480080999614224456
 SpriteRenderer:
   m_ObjectHideFlags: 0
