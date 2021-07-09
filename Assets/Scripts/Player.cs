@@ -38,7 +38,9 @@ public class Player : MonoBehaviour
     private AudioClip _clipLaser;
 
     [SerializeField]
-    public int _score;    
+    public int _score;
+
+    public Joystick joystick;
 
     // Start is called before the first frame update
     void Start()
@@ -80,7 +82,11 @@ public class Player : MonoBehaviour
     void Update()
     {
         CalculateMovement();
-        if (Input.GetKeyDown(KeyCode.Space) && Time.time >= _canFire)
+    }
+
+    public void Firing()
+    {
+        if (Time.time >= _canFire)
         {
             FireLaser();
         }
@@ -88,8 +94,8 @@ public class Player : MonoBehaviour
 
     void CalculateMovement()
     {
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
+        float horizontalInput = joystick.Horizontal;
+        float verticalInput = joystick.Vertical;
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
 
         float boundTop = 0f;
