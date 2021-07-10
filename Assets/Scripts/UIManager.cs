@@ -15,6 +15,8 @@ public class UIManager : MonoBehaviour
     private Image _livesImg;
     [SerializeField]
     private Sprite[] _liveSprites;
+    [SerializeField]
+    private Button _restartGameButton;
 
     private GameManager _gameManager;
 
@@ -29,11 +31,6 @@ public class UIManager : MonoBehaviour
         _scoreText.text = "Score: 0";
         _gameOverText.gameObject.SetActive(false);
         _restartText.gameObject.SetActive(false);
-    }
-
-    private void Update()
-    {
-        
     }
 
     public void UpdateScoreText(int score)
@@ -51,7 +48,13 @@ public class UIManager : MonoBehaviour
         _gameManager.GameOver();
         _gameOverText.gameObject.SetActive(true);
         _restartText.gameObject.SetActive(true);
+        _restartGameButton.gameObject.SetActive(true);
         StartCoroutine(GameOverTextBlink());
+    }
+    
+    public void RestartGameButton()
+    {
+        _gameManager.RestartGame();
     }
 
     IEnumerator GameOverTextBlink()
