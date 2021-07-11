@@ -5,18 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    private bool _isGameOver;
-
-    private void Update()
-    {
-
-    }
-
-    public void GameOver()
-    {
-        _isGameOver = true;
-    }
-
     public void RestartGame()
     {
         Scene scene = SceneManager.GetActiveScene();

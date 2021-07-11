@@ -96,6 +96,7 @@ public class Player : MonoBehaviour
     {
         float horizontalInput = joystick.Horizontal;
         float verticalInput = joystick.Vertical;
+       
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
 
         float boundTop = 0f;
@@ -146,10 +147,7 @@ public class Player : MonoBehaviour
         } 
 
         _lives--;
-        if (_lives > -1)
-        {
-            _uiManager.UpdateLives(_lives);
-        }
+
         if (_lives == 2)
         {
             _rightEngine.SetActive(true);
@@ -157,14 +155,19 @@ public class Player : MonoBehaviour
         else if (_lives == 1)
         {
             _leftEngine.SetActive(true);
-        } 
+        }
+        
+        if (_lives >= 0)
+        {
+            _uiManager.UpdateLives(_lives);
+        }
         else if (_lives < 1)
         {
             _spawnManager.OnPlayerDeath();
-            AudioSource.PlayClipAtPoint(_clipExplosion, transform.position);
             _uiManager.GameOverSequence();
+            AudioSource.PlayClipAtPoint(_clipExplosion, transform.position);
             Destroy(gameObject);
-        }
+        }  
     }
 
     public void TripleShotActive()
@@ -201,7 +204,7 @@ public class Player : MonoBehaviour
 
     public void AddScore()
     {
-        _score++;
+        _score += 10;
         _uiManager.UpdateScoreText(_score);
     }
 }

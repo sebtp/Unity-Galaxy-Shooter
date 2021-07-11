@@ -45,7 +45,6 @@ public class UIManager : MonoBehaviour
 
     public void GameOverSequence()
     {
-        _gameManager.GameOver();
         _gameOverText.gameObject.SetActive(true);
         _restartText.gameObject.SetActive(true);
         _restartGameButton.gameObject.SetActive(true);
