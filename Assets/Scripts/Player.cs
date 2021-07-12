@@ -147,6 +147,7 @@ public class Player : MonoBehaviour
         } 
 
         _lives--;
+        Debug.Log(_lives);
 
         if (_lives == 2)
         {
@@ -161,7 +162,8 @@ public class Player : MonoBehaviour
         {
             _uiManager.UpdateLives(_lives);
         }
-        else if (_lives < 1)
+        
+        if (_lives < 1)
         {
             _spawnManager.OnPlayerDeath();
             _uiManager.GameOverSequence();
