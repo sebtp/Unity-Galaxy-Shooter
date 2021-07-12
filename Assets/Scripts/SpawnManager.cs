@@ -56,6 +56,6 @@ public class SpawnManager : MonoBehaviour
 
     public void SpeedUpGame()
     {
-        Time.timeScale = Time.timeScale + 0.2f;
+        Time.timeScale = Time.timeScale + 0.15f;
     }
 }
