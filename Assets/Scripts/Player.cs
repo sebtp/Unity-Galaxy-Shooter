@@ -206,5 +206,10 @@ public class Player : MonoBehaviour
     {
         _score += 10;
         _uiManager.UpdateScoreText(_score);
+
+        if (_score % 50 == 0)
+        {
+            _spawnManager.SpeedUpGame();
+        }
     }
 }

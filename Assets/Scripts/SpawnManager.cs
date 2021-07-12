@@ -17,12 +17,8 @@ public class SpawnManager : MonoBehaviour
     //private float _boundBottom = -5f;
     private float _boundRight = 9f;
     private float _boundLeft = -9f;
+
     
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     public void StartSpawning()
     {
@@ -56,5 +52,10 @@ public class SpawnManager : MonoBehaviour
     public void OnPlayerDeath()
     {
         _stopSpawning = true;
+    }
+
+    public void SpeedUpGame()
+    {
+        Time.timeScale = Time.timeScale + 0.2f;
     }
 }
